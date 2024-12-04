@@ -1,3 +1,7 @@
+<?php
+// You can add any PHP logic here if necessary
+// Example: Check if user is logged in, handle API requests, etc.
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +51,7 @@
         </div>
 
         <p id="status">Status: Not connected</p>
-        <p id="deviceName"></p>
+        <p id="deviceName"><?php // You can dynamically output device name here if necessary ?></p>
         <canvas id="visualizer"></canvas>
     </div>
     <script src="cordova.js"></script>
