@@ -168,7 +168,7 @@ const disableEcho = () => {
 // Bluetooth connect/disconnect
 connectBluetoothButton.addEventListener('click', async () => {
     const options = {
-        filters: [{ name: 'Your Bluetooth Speaker Name' }] // You can filter by device name or services
+        filters: [{ name: 'HN-807' }] // You can filter by device name or services
     };
     try {
         bluetoothDevice = await navigator.bluetooth.requestDevice(options);
