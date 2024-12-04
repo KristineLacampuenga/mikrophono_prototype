@@ -1,7 +1,10 @@
-/* Basic styling */
+/* Basic Styling */
 body {
-    font-family: 'Pacifico', cursive;
-    background: linear-gradient(135deg, #1E1677, #FF007A, #6a5acd, #000000);
+    font-family: 'Baskerville', serif;
+    background: url('building.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: white;
     margin: 0;
     padding: 0;
@@ -11,39 +14,57 @@ body {
     justify-content: center;
     height: 100vh;
     text-align: center;
-    background-size: 400% 400%;
-    animation: gradientAnimation 10s ease infinite;
-}
-
-@keyframes gradientAnimation {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    transition: background-color 0.3s ease;
 }
 
 h1 {
     color: #fff;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 20px;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-    animation: textAnimation 3s ease-in-out infinite; 
+    animation: textAnimation 3s ease-in-out infinite;
 }
 
 @keyframes textAnimation {
-    0%, 100% { transform: scale(1); color: #fff; }
-    50% { transform: scale(1.2); color: #FF007A; }
+    0%, 100% { 
+        transform: scale(1); 
+        background-image: linear-gradient(to right, #ff007a, #fff); 
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+    50% { 
+        transform: scale(1.1); 
+        background-image: linear-gradient(to right, #fff, #ff007a); 
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+
+.animated-text {
+    font-size: 40px;
+    font-weight: bold;
+    display: inline-block;
+    animation: textAnimation 3s ease-in-out infinite;
 }
 
 /* Container */
 .container {
     width: 90%;
     max-width: 600px;
-    padding: 25px;
+    height: 80vh; /* Increase the height of the container */
+    padding: 40px; /* Adjust the padding for a more spacious layout */
     border-radius: 20px;
     background-color: rgba(0, 0, 0, 0.7);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    transition: box-shadow 0.3s ease-in-out;
 }
+
+.container:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+}
+
 
 /* Button Styles */
 button {
@@ -59,9 +80,12 @@ button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 70px;
-    height: 70px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    width: 80px;
+    height: 80px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    /* 3D balloon effect */
+    background: radial-gradient(circle at 30% 30%, #FF007A, #D10069 60%);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
 button:disabled {
@@ -71,24 +95,20 @@ button:disabled {
 
 button:hover {
     background-color: #D10069;
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transform: scale(1.2);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5);
     color: #FF00FF;
 }
 
 /* Specific button styles */
-#muteButton { background-color: #FF6347; }
-#muteButton:hover { background-color: #FF4500; }
-#echoButton { background-color: #FFD700; }
-#echoButton:hover { background-color: #FFCC00; }
-#stopButton { background-color: #FF6347; }
-#stopButton:hover { background-color: #FF4500; }
-#startButton { background-color: #00FF00; }
-#startButton:hover { background-color: #00CC00; }
+#muteButton { background: radial-gradient(circle at 30% 30%, #daf736, #009933 60%); }
+#echoButton { background: radial-gradient(circle at 30% 30%, #ffcc99, #ff6600 60%); }
+#stopButton { background: radial-gradient(circle at 30% 30%, #ac0909, #ff0066 60%); }
+#startButton { background: radial-gradient(circle at 30% 30%, #33ccff, #ff99cc 60%); }
 
 /* Controls */
 .controls {
-    margin-top: 20px;
+    margin-top: 60px;
     display: flex;
     flex-direction: row;
     gap: 60px;
@@ -100,18 +120,21 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
 }
 
+/* Enhanced 3D Circular Slider */
 input[type="range"] {
-    height: 30%;
-    width: 20px;
-    margin: 5px 0;
+    width: 250px;
+    height: 15px;
+    margin: 10px 0;
     cursor: pointer;
     appearance: none;
     background-color: #ddd;
-    border-radius: 10px;
-    transition: background-color 0.3s, transform 0.3s;
-    writing-mode: vertical-lr;
+    border-radius: 25px;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0, 0, 0, 0.2); /* Outer shadow for depth */
+    position: relative;
 }
 
 input[type="range"]:focus {
@@ -121,82 +144,99 @@ input[type="range"]:focus {
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
-    width: 8px;
-    background: #FF007A;
-    border-radius: 10px;
+    height: 8px;
+    background: linear-gradient(135deg, #ff007a, #ff005c); /* 3D gradient effect on track */
+    border-radius: 25px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5); /* Adding track shadow for more depth */
 }
 
 input[type="range"]::-webkit-slider-thumb {
-    height: 20px;
-    width: 20px;
+    height: 40px; /* Increased size for circular effect */
+    width: 40px;
     background: #FF007A;
-    border-radius: 50%;
+    border-radius: 50%; /* Circle shape */
     border: 2px solid #fff;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.6), 0px 8px 20px rgba(0, 0, 0, 0.4); /* Enhanced 3D shadow */
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    transform-origin: center center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); /* Added depth to thumb */
 }
 
 input[type="range"]:hover::-webkit-slider-thumb {
     background-color: #D10069;
-    transform: scale(1.1);
+    transform: scale(1.3); /* Slightly enlarged thumb */
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.8), 0px 10px 20px rgba(0, 0, 0, 0.6); /* Bigger shadow */
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.4);
+    box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.9), 0px 15px 30px rgba(0, 0, 0, 0.7); /* Increased depth when active */
 }
 
 /* Volume and pitch percentage text */
 .control-group label, .control-group span {
-    margin-top: 5px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: white;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Visualizer */
 .visualizer-container {
-    margin-top: 20px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px; /* Adding perspective for 3D effect */
 }
 
 canvas {
     width: 100%;
     height: 250px;
-    margin-top: 20px;
-    border: 3px solid #FF007A;
+    margin-top: 30px;
+    border: 4px solid #FF007A;
     border-radius: 15px;
-    background-color: rgba(0, 0, 0, 0.7);
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5), 0 0 50px rgba(255, 0, 122, 0.8); /* Glowing effect */
+    transform: rotateX(5deg) rotateY(5deg); /* Slight 3D tilt */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
 
+/* Hover Effect: Enhancing studio-like feel */
+canvas:hover {
+    transform: rotateX(0deg) rotateY(0deg) scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.7), 0 0 70px rgba(255, 0, 122, 1); /* Stronger glowing effect */
+}
 
-
-/* Mobile responsiveness */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
     body { padding: 20px; }
-    h1 { font-size: 1.5rem; }
-    .container { width: 100%; padding: 15px; }
+    h1 { font-size: 1.8rem; }
+    .container { width: 100%; padding: 20px; }
     button {
-        padding: 10px;
-        width: 60px;
-        height: 60px;
+        padding: 12px;
+        width: 70px;
+        height: 70px;
         font-size: 1.2rem;
     }
     .controls {
         flex-direction: row;
-        gap: 20px;
+        gap: 30px;
     }
-    input[type="range"] { height: 150px; }
-    canvas { height: 180px; }
+    input[type="range"] { width: 200px; }
+    canvas { height: 200px; }
 }
 
 @media (max-width: 480px) {
-    h1 { font-size: 1.2rem; }
+    h1 { font-size: 1.4rem; }
     button {
-        padding: 8px;
-        width: 50px;
-        height: 50px;
+        padding: 10px;
+        width: 60px;
+        height: 60px;
         font-size: 1rem;
     }
-    .container { padding: 10px; }
-    .controls { gap: 30px; }
-    input[type="range"] { height: 250px; }
+    .container { padding: 15px; }
+    .controls { gap: 20px; }
+    input[type="range"] { width: 150px; }
     canvas { height: 150px; }
 }
-
