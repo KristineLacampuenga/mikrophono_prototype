@@ -168,13 +168,20 @@ const disableEcho = () => {
 // Bluetooth connect/disconnect
 connectBluetoothButton.addEventListener('click', async () => {
     const options = {
-        acceptAllDevices: true
+        filters: [{ name: 'Your Bluetooth Speaker Name' }] // You can filter by device name or services
     };
     try {
         bluetoothDevice = await navigator.bluetooth.requestDevice(options);
-        console.log(`> Name: ${bluetoothDevice.name}`);
-        console.log(`> Id: ${bluetoothDevice.id}`);
-        console.log(`> Connected: ${bluetoothDevice.gatt.connected}`);
+
+        // Check if the device matches the target Bluetooth address
+        if (bluetoothDevice.id === '41:42:FE:5F:48:07') {
+            console.log(`Successfully connected to the device with address ${bluetoothDevice.id}`);
+        } else {
+            console.log(`This is not the correct device. The connected device's address is ${bluetoothDevice.id}`);
+            status.innerText = 'Connected to a different device. Please try again.';
+            return;
+        }
+
         bluetoothServer = await bluetoothDevice.gatt.connect();
         const deviceName = bluetoothDevice.name || 'Unnamed Device';
         status.innerText = `Connected to ${deviceName}`;
@@ -249,7 +256,7 @@ const visualize = () => {
     canvasContext.stroke();
 };
 
-// Automatically guide user on page load
-window.addEventListener('load', () => {
-    status.innerText = 'Ready to start your audio experience.';
-});
+// Utility function to change button color
+const changeButtonColor = (button, color) => {
+    button.style.backgroundColor = color;
+};
