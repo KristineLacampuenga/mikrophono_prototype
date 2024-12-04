@@ -238,5 +238,5 @@ canvas:hover {
     .container { padding: 15px; }
     .controls { gap: 20px; }
     input[type="range"] { width: 150px; }
-    canvas { height: 150px; }
+    canvas { height: 250px; }
 }
