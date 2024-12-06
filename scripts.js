@@ -1,48 +1,41 @@
-// Grab the elements
+// Grab the button and status elements
 const connectButton = document.getElementById('connectBtn');
 const status = document.getElementById('status');
 
 // Function to connect to Bluetooth and route audio
 async function connectAndRouteAudio() {
     try {
-        // Request Bluetooth device with the 'audio_sink' service (Bluetooth speaker/headphone)
+        // Step 1: Request a Bluetooth device with an audio service
         const device = await navigator.bluetooth.requestDevice({
-            filters: [{ services: ['audio_sink'] }] // Looking for audio sink devices
+            filters: [{ services: ['audio_sink'] }] // Looking for audio sink devices (Bluetooth speakers)
         });
 
         status.textContent = `Connecting to ${device.name}...`;
 
-        // Connect to the device
+        // Step 2: Connect to the device
         const server = await device.gatt.connect();
         status.textContent = `Connected to ${device.name}`;
 
-        // Get primary service (audio_sink)
+        // Step 3: Get the primary service (audio_sink)
         const service = await server.getPrimaryService('audio_sink');
 
-        // Handle audio routing (this part will depend on browser support and device capabilities)
-        await setAudioOutputToBluetooth(device);
+        // Step 4: Use Web Audio API to get microphone stream
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-    } catch (error) {
-        console.error('Error connecting to Bluetooth:', error);
-        status.textContent = `Error: ${error}`;
-    }
-}
-
-// Function to route audio output to Bluetooth (Web Audio API interaction)
-const setAudioOutputToBluetooth = async (device) => {
-    try {
-        // Check if the browser supports setting audio output to Bluetooth (may depend on device and browser)
+        // Step 5: Route microphone audio to the Bluetooth device (simulated in browser)
         const audioElement = new Audio();
-        audioElement.srcObject = device;
+        audioElement.srcObject = stream;
         audioElement.play();
 
         status.textContent = `Audio routed to Bluetooth: ${device.name}`;
 
-    } catch (error) {
-        console.error('Error routing audio to Bluetooth:', error);
-        status.textContent = 'Failed to route audio to Bluetooth.';
-    }
-};
+        // Optionally, you could add further functionality like controlling playback, muting, etc.
 
-// Event listener for the connect button
+    } catch (error) {
+        console.error('Error connecting to Bluetooth or routing audio:', error);
+        status.textContent = `Error: ${error.message}`;
+    }
+}
+
+// Event listener for the button click
 connectButton.addEventListener('click', connectAndRouteAudio);
