@@ -1,41 +1,33 @@
-// Grab the button and status elements
-const connectButton = document.getElementById('connectBtn');
-const status = document.getElementById('status');
+const connectButton = document.getElementById('connect');
+const statusText = document.getElementById('status');
 
-// Function to connect to Bluetooth and route audio
-async function connectAndRouteAudio() {
+connectButton.addEventListener('click', () => {
+    connectToBluetoothDevice();
+});
+
+async function connectToBluetoothDevice() {
     try {
-        // Step 1: Request a Bluetooth device with an audio service
+        // Request Bluetooth device
         const device = await navigator.bluetooth.requestDevice({
-            filters: [{ services: ['audio_sink'] }] // Looking for audio sink devices (Bluetooth speakers)
+            filters: [{ services: ['battery_service'] }] // You can customize this filter for your specific device
         });
 
-        status.textContent = `Connecting to ${device.name}...`;
+        // Display device name
+        console.log('Device Name:', device.name);
 
-        // Step 2: Connect to the device
+        // Connect to the GATT server
         const server = await device.gatt.connect();
-        status.textContent = `Connected to ${device.name}`;
+        statusText.textContent = `Status: Connected to ${device.name}`;
 
-        // Step 3: Get the primary service (audio_sink)
-        const service = await server.getPrimaryService('audio_sink');
-
-        // Step 4: Use Web Audio API to get microphone stream
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-        // Step 5: Route microphone audio to the Bluetooth device (simulated in browser)
-        const audioElement = new Audio();
-        audioElement.srcObject = stream;
-        audioElement.play();
-
-        status.textContent = `Audio routed to Bluetooth: ${device.name}`;
-
-        // Optionally, you could add further functionality like controlling playback, muting, etc.
+        // Now you can interact with the Bluetooth device.
+        // For example, read a battery level:
+        const service = await server.getPrimaryService('battery_service');
+        const characteristic = await service.getCharacteristic('battery_level');
+        const batteryLevel = await characteristic.readValue();
+        console.log('Battery Level: ', batteryLevel.getUint8(0));
 
     } catch (error) {
-        console.error('Error connecting to Bluetooth or routing audio:', error);
-        status.textContent = `Error: ${error.message}`;
+        console.error('Error:', error);
+        statusText.textContent = 'Status: Error while connecting';
     }
 }
-
-// Event listener for the button click
-connectButton.addEventListener('click', connectAndRouteAudio);
