@@ -3,39 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Microphone Web App</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Link to Font Awesome for icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Bluetooth Audio Connection</title>
 </head>
 <body>
-    <div class="container">
-        <h1>MikroPHONEno</h1>
-        <!-- Start Microphone Button with Icon -->
-        <button id="startButton"><i class="fas fa-microphone"></i></button>
-        <!-- Stop Microphone Button with Icon -->
-        <button id="stopButton" disabled><i class="fas fa-stop"></i></button>
-        <!-- Mute Button with Icon -->
-        <button id="muteButton" disabled><i class="fas fa-volume-mute"></i></button>
-        <!-- Echo Button with Icon -->
-        <button id="echoButton" disabled><i class="fas fa-volume-up"></i></button>
+    <h1>Bluetooth Audio Connection</h1>
+    <button id="connectBtn">Connect & Route Audio</button>
+    <p id="status"></p>
 
-        <div class="controls">
-            <div class="control-group">
-                <input type="range" id="volumeControl" min="0" max="100" value="50">
-                <label for="volumeControl">Volume</label>
-                <span id="volumePercentage">50%</span>
-            </div>
-            <div class="control-group">
-                <input type="range" id="pitchControl" min="0" max="100" step="1" value="50">
-                <label for="pitchControl">Pitch</label>
-                <span id="pitchPercentage">50%</span>
-            </div>
-        </div>
-
-        <p id="status"></p>
-        <canvas id="visualizer"></canvas>
-
-    <script src="scripts.js"></script>
+    <!-- Include external JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
