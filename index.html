@@ -3,14 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bluetooth Device Scan</title>
+    <title>Connect to Bluetooth Device</title>
 </head>
 <body>
-    <h1>Bluetooth Device Scan</h1>
-    <button id="scan">Scan for Bluetooth Devices</button>
-    <p id="status">Status: Ready to scan</p>
-    <ul id="device-list"></ul>
+    <h1>Bluetooth Device Connection</h1>
+    <button id="connect">Connect to Bluetooth</button>
+    <p id="status">Status: Disconnected</p>
 
-    <script src="bluetooth.js"></script>
+    <script>
+        const connectButton = document.getElementById('connect');
+        const statusText = document.getElementById('status');
+
+        connectButton.addEventListener('click', () => {
+            requestBluetoothDevice();
+        });
+
+        async function requestBluetoothDevice() {
+            try {
+                // Use the Web Bluetooth API to request a Bluetooth device
+                const device = await navigator.bluetooth.requestDevice({
+                    acceptAllDevices: true, // This allows scanning for all available Bluetooth devices
+                    optionalServices: ['battery_service'] // Optional, can be customized
+                });
+
+                statusText.textContent = `Status: Connected to ${device.name}`;
+                
+                // You can connect to the device and interact with it here, for example:
+                const server = await device.gatt.connect();
+                const service = await server.getPrimaryService('battery_service');
+                const characteristic = await service.getCharacteristic('battery_level');
+                const batteryLevel = await characteristic.readValue();
+                console.log('Battery Level:', batteryLevel.getUint8(0));
+
+            } catch (error) {
+                console.error('Error:', error);
+                statusText.textContent = 'Status: Error while connecting';
+            }
+        }
+    </script>
 </body>
 </html>
