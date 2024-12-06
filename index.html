@@ -3,43 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connect to Bluetooth Device</title>
+    <title>Live Microphone Web App</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Link to Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Bluetooth Device Connection</h1>
-    <button id="connect">Connect to Bluetooth</button>
-    <p id="status">Status: Disconnected</p>
+    <div class="container">
+        <h1>MikroPHONEno</h1>
+        <!-- Start Microphone Button with Icon -->
+        <button id="startButton"><i class="fas fa-microphone"></i></button>
+        <!-- Stop Microphone Button with Icon -->
+        <button id="stopButton" disabled><i class="fas fa-volume-mute"></i></button>
+        <!-- Echo Button with Icon -->
+        <button id="echoButton" disabled><i class="fas fa-volume-up"></i></button>
+        <!-- Record Button with Icon -->
+        <button id="recordButton" disabled><i class="fas fa-record-vinyl"></i></button>
+        <!-- Playback Button with Icon -->
+        <button id="playbackButton" disabled><i class="fas fa-play"></i></button>
 
-    <script>
-        const connectButton = document.getElementById('connect');
-        const statusText = document.getElementById('status');
+        <div class="controls">
+            <div class="control-group">
+                <input type="range" id="volumeControl" min="0" max="100" value="50">
+                <label for="volumeControl">Volume</label>
+                <span id="volumePercentage">50%</span>
+            </div>
+            <div class="control-group">
+                <input type="range" id="pitchControl" min="0" max="100" step="1" value="50">
+                <label for="pitchControl">Pitch</label>
+                <span id="pitchPercentage">50%</span>
+            </div>
+        </div>
 
-        connectButton.addEventListener('click', () => {
-            requestBluetoothDevice();
-        });
+        <p id="status"></p>
+        <canvas id="visualizer"></canvas>
 
-        async function requestBluetoothDevice() {
-            try {
-                // Use the Web Bluetooth API to request a Bluetooth device
-                const device = await navigator.bluetooth.requestDevice({
-                    acceptAllDevices: true, // This allows scanning for all available Bluetooth devices
-                    optionalServices: ['battery_service'] // Optional, can be customized
-                });
-
-                statusText.textContent = `Status: Connected to ${device.name}`;
-                
-                // You can connect to the device and interact with it here, for example:
-                const server = await device.gatt.connect();
-                const service = await server.getPrimaryService('battery_service');
-                const characteristic = await service.getCharacteristic('battery_level');
-                const batteryLevel = await characteristic.readValue();
-                console.log('Battery Level:', batteryLevel.getUint8(0));
-
-            } catch (error) {
-                console.error('Error:', error);
-                statusText.textContent = 'Status: Error while connecting';
-            }
-        }
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>
