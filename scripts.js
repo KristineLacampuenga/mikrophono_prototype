@@ -266,4 +266,4 @@ recordButton.addEventListener('click', () => {
         status.innerText = 'Recording...';
     }
 });
-
+alert("How to make best, safe use of this microphone? \n1. Set volume to 20% \n2. Connect your device audio to external speaker. \n3. Tap the mic icon. \n4. Adjust volume levels as per your need.\n6. If you want to record click record button and automatic download to your device.");
