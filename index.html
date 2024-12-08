@@ -10,7 +10,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>MikroPHONEno</h1>
+        <h1>
+            <img src="icon-1.png" alt="Icon" class="title-icon">
+            MikroPHONEno
+        </h1>
         <!-- Start Microphone Button with Icon -->
         <button id="startButton"><i class="fas fa-microphone"></i></button>
         <!-- Stop Microphone Button with Icon -->
@@ -24,20 +27,20 @@
 
         <div class="controls">
             <div class="control-group">
-                <input type="range" id="volumeControl" min="0" max="100" value="50">
+                <input type="range" id="volumeControl" min="0" max="100" value="20">
                 <label for="volumeControl">Volume</label>
-                <span id="volumePercentage">50%</span>
+                <span id="volumePercentage">20%</span>
             </div>
             <div class="control-group">
-                <input type="range" id="pitchControl" min="0" max="100" step="1" value="50">
+                <input type="range" id="pitchControl" min="0" max="100" step="1" value="10">
                 <label for="pitchControl">Pitch</label>
-                <span id="pitchPercentage">50%</span>
+                <span id="pitchPercentage">10%</span>
             </div>
         </div>
 
         <p id="status"></p>
         <canvas id="visualizer"></canvas>
-
+    </div>
     <script src="scripts.js"></script>
 </body>
 </html>
