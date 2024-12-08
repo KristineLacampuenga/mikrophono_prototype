@@ -19,12 +19,25 @@ body {
 
 h1 {
     color: #fff;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 20px;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
     animation: textAnimation 3s ease-in-out infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the text and icon */
 }
+
+.title-icon {
+    width: 75px; /* Adjust the size of the icon */
+    height: 75px; /* Adjust the size of the icon */
+    margin-bottom: 10px; /* Space between the icon and the text */
+    border-radius: 50%; /* Make the icon background a circle */
+    padding: 5px; /* Add padding around the icon */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
 
 @keyframes textAnimation {
     0%, 100% { 
@@ -35,7 +48,7 @@ h1 {
     }
     50% { 
         transform: scale(1.1); 
-        background-image: linear-gradient(to right, #fff, #ff007a); 
+        background-image: linear-gradient(to right, #fff, #fad711); 
         -webkit-background-clip: text;
         color: transparent;
     }
@@ -55,8 +68,8 @@ h1 {
     height: 80vh; /* Increase the height of the container */
     padding: 40px; /* Adjust the padding for a more spacious layout */
     border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.7);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.377);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.281);
     backdrop-filter: blur(15px);
     transition: box-shadow 0.3s ease-in-out;
 }
@@ -206,7 +219,7 @@ canvas:hover {
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 750px) {
     body { padding: 20px; }
     h1 { font-size: 1.8rem; }
     .container { width: 100%; padding: 20px; }
@@ -235,5 +248,5 @@ canvas:hover {
     .container { padding: 15px; }
     .controls { gap: 20px; }
     input[type="range"] { width: 150px; }
-    canvas { height: 190px; }
+    canvas { height: 190px;}
 }
