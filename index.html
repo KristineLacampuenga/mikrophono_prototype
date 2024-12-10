@@ -14,33 +14,41 @@
             <img src="icon-1.png" alt="Icon" class="title-icon">
             MikroPHONEno
         </h1>
-        <!-- Start Microphone Button with Icon -->
-        <button id="startButton"><i class="fas fa-microphone"></i></button>
-        <!-- Stop Microphone Button with Icon -->
-        <button id="stopButton" disabled><i class="fas fa-volume-mute"></i></button>
-        <!-- Echo Button with Icon -->
-        <button id="echoButton" disabled><i class="fas fa-volume-up"></i></button>
-        <!-- Record Button with Icon -->
-        <button id="recordButton" disabled><i class="fas fa-record-vinyl"></i></button>
-        <!-- Playback Button with Icon -->
-        <button id="playbackButton" disabled><i class="fas fa-play"></i></button>
-
+        
+        <!-- Microphone Selection -->
+        <div class="microphone-selection">
+            <label for="microphoneSelect">Select Microphone:</label>
+            <select id="microphoneSelect"></select>
+            <button id="selectMicrophoneButton"><i class="fas fa-check"></i> Apply</button>
+        </div>
+        
+        <!-- Microphone Control Buttons -->
+        <div class="button-group">
+            <button id="startButton" class="control-button"><i class="fas fa-microphone"></i> Start</button>
+            <button id="stopButton" class="control-button" disabled><i class="fas fa-volume-mute"></i> Stop</button>
+            <button id="echoButton" class="control-button" disabled><i class="fas fa-volume-up"></i> Echo</button>
+            <button id="recordButton" class="control-button" disabled><i class="fas fa-record-vinyl"></i> Record</button>
+            <button id="playbackButton" class="control-button" disabled><i class="fas fa-play"></i> Playback</button>
+        </div>
+        
+        <!-- Volume and Pitch Control -->
         <div class="controls">
             <div class="control-group">
+                <label for="volumeControl">Volume: <span id="volumePercentage">20%</span></label>
                 <input type="range" id="volumeControl" min="0" max="100" value="20">
-                <label for="volumeControl">Volume</label>
-                <span id="volumePercentage">20%</span>
             </div>
             <div class="control-group">
+                <label for="pitchControl">Pitch: <span id="pitchPercentage">10%</span></label>
                 <input type="range" id="pitchControl" min="0" max="100" step="1" value="10">
-                <label for="pitchControl">Pitch</label>
-                <span id="pitchPercentage">10%</span>
             </div>
         </div>
-
-        <p id="status"></p>
-        <canvas id="visualizer"></canvas>
+        
+        <!-- Status and Visualizer -->
+        <p id="status">Status: Ready</p>
+        <canvas id="visualizer" width="600" height="200"></canvas>
     </div>
+    
     <script src="scripts.js"></script>
 </body>
 </html>
+
