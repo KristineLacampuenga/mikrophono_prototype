@@ -11,11 +11,12 @@ const status = document.getElementById('status');
 const visualizer = document.getElementById('visualizer');
 const canvasContext = visualizer.getContext('2d');
 
-let audioContext, analyser, gainNode, microphone, audioOutput, mediaRecorder;
-let dataArray, bufferLength, recordedChunks = [];
+let audioContext, analyser, gainNode, microphone, audioOutput, mediaRecorder, liveRecorder;
+let dataArray, bufferLength, recordedChunks = [], liveAudioChunks = [];
 let pitchShifter;
 let echoEnabled = false;
 let echoGainNode, echoDelayNode;
+let recordedAudioURL = null;
 
 // Class for pitch shifting modulation (Jungle effect)
 class Jungle {
@@ -26,7 +27,7 @@ class Jungle {
         this.modulationNode = context.createGain();
         this.delayNode = context.createDelay();
 
-        this.delayNode.delayTime.value = 0.005; // Reduced delay time for a more natural effect
+        this.delayNode.delayTime.value = 0.005;
         this.modulationOscillator = context.createOscillator();
         this.modulationOscillator.type = 'sine';
         this.modulationOscillator.frequency.value = 60;
@@ -40,11 +41,7 @@ class Jungle {
     }
 
     setPitchOffset(offset) {
-        this.modulationNode.gain.value = offset * 10; // Increased gain for higher pitch shifting
-    }
-
-    applyAITransformations(inputBuffer) {
-        return inputBuffer;
+        this.modulationNode.gain.value = offset * 10;
     }
 }
 
@@ -57,18 +54,18 @@ const initializeVisualizer = async () => {
 
     echoGainNode = audioContext.createGain();
     echoDelayNode = audioContext.createDelay();
-    echoDelayNode.delayTime.value = 0.1; // Reduced delay for more subtle echo
+    echoDelayNode.delayTime.value = 0.1;
 
-    bassFilter = audioContext.createBiquadFilter();
+    const bassFilter = audioContext.createBiquadFilter();
     bassFilter.type = 'lowshelf';
     bassFilter.frequency.value = 200;
 
-    midFilter = audioContext.createBiquadFilter();
+    const midFilter = audioContext.createBiquadFilter();
     midFilter.type = 'peaking';
     midFilter.frequency.value = 1000;
     midFilter.Q.value = 1;
 
-    trebleFilter = audioContext.createBiquadFilter();
+    const trebleFilter = audioContext.createBiquadFilter();
     trebleFilter.type = 'highshelf';
     trebleFilter.frequency.value = 3000;
 
@@ -91,29 +88,44 @@ const initializeVisualizer = async () => {
             .connect(analyser)
             .connect(audioOutput);
 
+        const livePlayback = audioContext.createMediaStreamDestination();
         const audioElement = new Audio();
-        audioElement.srcObject = audioOutput.stream;
+        audioElement.srcObject = livePlayback.stream;
         audioElement.play();
 
-        // Initialize MediaRecorder
+        microphone.connect(livePlayback);
+
+        liveRecorder = new MediaRecorder(livePlayback.stream);
+        liveRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+                liveAudioChunks.push(event.data);
+            }
+        };
+        liveRecorder.start();
+
         mediaRecorder = new MediaRecorder(audioOutput.stream);
         mediaRecorder.ondataavailable = (event) => {
             if (event.data.size > 0) {
                 recordedChunks.push(event.data);
             }
         };
-        mediaRecorder.onstop = () => {
-            const blob = new Blob(recordedChunks, { type: 'audio/webm' });
-            recordedChunks = [];
-            const url = URL.createObjectURL(blob);
-            const audio = new Audio(url);
-            audio.play();
 
-            // Automatic download
-            const downloadLink = document.createElement('a');
-            downloadLink.href = url;
-            downloadLink.setAttribute('download', 'recording.webm');
-            downloadLink.click();
+        mediaRecorder.onstop = () => {
+            if (recordedChunks.length > 0) {
+                const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+                recordedAudioURL = URL.createObjectURL(blob);
+
+                // Auto-download recording
+                const downloadLink = document.createElement('a');
+                downloadLink.href = recordedAudioURL;
+                downloadLink.setAttribute('download', 'recording.webm');
+                downloadLink.click();
+
+                playbackButton.disabled = false;
+            } else {
+                console.error('No audio recorded.');
+                recordedAudioURL = null;
+            }
         };
 
         await setAudioOutputToBluetooth(audioElement);
@@ -147,24 +159,18 @@ const visualize = () => {
     requestAnimationFrame(visualize);
     analyser.getByteTimeDomainData(dataArray);
 
-    canvasContext.fillStyle = 'black';
-    canvasContext.fillRect(0, 0, visualizer.width, visualizer.height);
-
-    const gradient = canvasContext.createLinearGradient(0, 0, visualizer.width, 0);
-    gradient.addColorStop(0, 'rgb(255, 0, 255)');
-    gradient.addColorStop(0.5, 'rgb(0, 255, 255)');
-    gradient.addColorStop(1, 'rgb(255, 0, 255)');
+    canvasContext.clearRect(0, 0, visualizer.width, visualizer.height);
 
     canvasContext.lineWidth = 3;
-    canvasContext.strokeStyle = gradient;
+    canvasContext.strokeStyle = 'rgba(255, 0, 255, 0.6)';
     canvasContext.beginPath();
 
-    const sliceWidth = visualizer.width * 1.0 / bufferLength;
+    const sliceWidth = visualizer.width / bufferLength;
     let x = 0;
 
     for (let i = 0; i < bufferLength; i++) {
         const v = dataArray[i] / 128.0;
-        const y = v * visualizer.height / 2;
+        const y = (v * visualizer.height) / 2;
 
         if (i === 0) {
             canvasContext.moveTo(x, y);
@@ -175,18 +181,10 @@ const visualize = () => {
         x += sliceWidth;
     }
 
-    canvasContext.lineWidth = 6;
-    canvasContext.strokeStyle = 'rgba(255, 0, 255, 0.3)';
-    canvasContext.shadowColor = 'rgba(255, 0, 255, 0.7)';
-    canvasContext.shadowBlur = 10;
-    canvasContext.stroke();
-
-    canvasContext.lineWidth = 2;
-    canvasContext.strokeStyle = gradient;
     canvasContext.stroke();
 };
 
-// Start and stop button functionality
+// Start and stop functionality
 startButton.addEventListener('click', async () => {
     await initializeVisualizer();
     status.innerText = 'Microphone is live...';
@@ -194,17 +192,18 @@ startButton.addEventListener('click', async () => {
     stopButton.disabled = false;
     echoButton.disabled = false;
     recordButton.disabled = false;
-    playbackButton.disabled = true; // Initially disabled until recording is done
+    playbackButton.disabled = true; // Disable playback while live mic is active
 });
 
 stopButton.addEventListener('click', () => {
     audioContext.close();
+    liveRecorder.stop();
     status.innerText = 'Microphone stopped.';
     startButton.disabled = false;
     stopButton.disabled = true;
     echoButton.disabled = true;
     recordButton.disabled = true;
-    playbackButton.disabled = true;
+    playbackButton.disabled = false; // Enable playback when mic is stopped
 });
 
 // Echo functionality
@@ -220,17 +219,15 @@ echoButton.addEventListener('click', () => {
     }
 });
 
-// Enable echo effect
 const enableEcho = () => {
-    echoGainNode.gain.value = 0.5; // Increased gain for echo effect
+    echoGainNode.gain.value = 0.5;
     gainNode.connect(echoDelayNode);
     echoDelayNode.connect(echoGainNode);
-    echoGainNode.connect(gainNode); // Feedback loop to create echo
+    echoGainNode.connect(gainNode);
     echoGainNode.connect(audioContext.destination);
     status.innerText = 'Echo Enabled...';
 };
 
-// Disable echo effect
 const disableEcho = () => {
     gainNode.disconnect(echoDelayNode);
     echoDelayNode.disconnect(echoGainNode);
@@ -242,14 +239,14 @@ const disableEcho = () => {
 volumeControl.addEventListener('input', () => {
     const volume = volumeControl.value / volumeControl.max;
     gainNode.gain.value = volume;
-    volumePercentage.innerText = Math.round(volume * 100) + '%';
+    volumePercentage.innerText = `${Math.round(volume * 100)}%`;
 });
 
 // Pitch control
 pitchControl.addEventListener('input', () => {
     const pitch = pitchControl.value / pitchControl.max;
-    pitchShifter.setPitchOffset(pitch * 3); // Increase the pitch shift range
-    pitchPercentage.innerText = Math.round(pitch * 100) + '%'; // Display updated percentage
+    pitchShifter.setPitchOffset(pitch * 3);
+    pitchPercentage.innerText = `${Math.round(pitch * 100)}%`;
 });
 
 // Record functionality
@@ -257,13 +254,27 @@ recordButton.addEventListener('click', () => {
     if (mediaRecorder.state === 'recording') {
         mediaRecorder.stop();
         recordButton.style.backgroundColor = '#FF6347';
-        playbackButton.disabled = false;
         status.innerText = 'Recording stopped.';
     } else {
         mediaRecorder.start();
         recordButton.style.backgroundColor = '#32CD32';
-        playbackButton.disabled = true;
         status.innerText = 'Recording...';
     }
 });
-alert("How to make best, safe use of this microphone? \n1. Set volume to 20% \n2. Connect your device audio to external speaker. \n3. Tap the mic icon. \n4. Adjust volume levels as per your need.\n6. If you want to record click record button and automatic download to your device.");
+
+// Playback functionality
+playbackButton.addEventListener('click', () => {
+    if (!recordedAudioURL) {
+        console.error('No valid recording to play.');
+        status.innerText = 'No recording available to play.';
+        return;
+    }
+
+    const audio = new Audio(recordedAudioURL);
+    audio.play();
+});
+
+// Initialize the application with a safety alert
+window.onload = () => {
+    alert("How to make best, safe use of this microphone? \n1. Set volume to 20% \n2. Connect your device audio to external speaker. \n3. Tap the mic icon. \n4. Adjust volume levels as per your need. \n5. If you want to record, click the record button for automatic download to your device.");
+};
