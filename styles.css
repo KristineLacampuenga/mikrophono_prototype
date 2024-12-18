@@ -1,3 +1,4 @@
+/* Body styling */
 body {
     background-image: url('building2.jpg');
     background-size: cover;
@@ -12,6 +13,7 @@ body {
     overflow: hidden;
 }
 
+/* Container styling */
 .container {
     text-align: center;
     background-color: rgba(75, 0, 0, 0.7);
@@ -22,12 +24,14 @@ body {
     max-width: 90%;
 }
 
+/* Heading styling */
 h1 {
     font-size: 2.1em;
     margin-bottom: 15px;
     color: #ffffff;
 }
 
+/* Title Icon styling */
 .title-icon {
     width: 80px;
     height: 80px;
@@ -56,6 +60,7 @@ h1 {
     height: auto;
 }
 
+/* Control buttons container */
 .control-btn {
     display: flex;
     justify-content: center;
@@ -99,86 +104,79 @@ button:hover:not(:disabled) {
 /* Controls container */
 .controls {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row; /* Arrange elements horizontally */
+    justify-content: center; /* Center elements horizontally */
+    align-items: center; /* Align elements vertically */
+    gap: 30px; /* Space between sliders and controls */
     margin-top: 20px;
-    gap: 20px;
 }
 
+/* Control group styling */
 .control-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Stack labels and sliders vertically */
     align-items: center;
-    gap: 10px;
-    width: 100%;
+    gap: 10px; /* Space between the slider and label/percentage */
+    flex: 1; /* Allow sliders to take equal width */
 }
 
-/* Realistic slider appearance */
+/* Ensure slider elements have a defined width and height for vertical alignment */
 .control-group input[type="range"] {
-    width: 80%;
-    height: 15px;
-    border-radius: 10px;
-    background: #ccc;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px; /* Width for vertical slider */
+    height: 200px; /* Height for vertical slider */
+    background: #800000; /* Maroon background color */
     outline: none;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
+/* Vertical slider with writing-mode */
+.control-group input[type="range"][orient="vertical"] {
+    writing-mode: vertical-lr; /* Make the slider vertical */
+    direction: rtl; /* Reverse the slider direction */
+    height: 200px; /* Ensure height is set */
+    margin-bottom: 10px;
+}
+
+/* Slider hover effect */
 .control-group input[type="range"]:hover {
-    background-color: #888;
+    background-color: #550000; /* Darker maroon on hover */
 }
 
+/* Slider focus effect */
 .control-group input[type="range"]:focus {
-    background-color: #555;
+    background-color: #3d0000; /* Even darker maroon on focus */
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
-/* Slider thumb */
-.control-group input[type="range"]::-webkit-slider-runnable-track {
-    height: 10px;
-    border-radius: 5px;
-}
-
+/* Thumb styling for sliders */
 .control-group input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
+    appearance: none;
     width: 30px;
     height: 30px;
-    background: #4CAF50;
+    background: #800000; /* Maroon thumb color */
     border-radius: 50%;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     transition: background-color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
 }
 
+/* Thumb hover effect */
 .control-group input[type="range"]::-webkit-slider-thumb:hover {
-    background-color: #45a049;
+    background-color: #550000; /* Darker maroon on hover */
     transform: scale(1.1);
 }
 
+/* Thumb active effect */
 .control-group input[type="range"]::-webkit-slider-thumb:active {
-    background-color: #388e3c;
+    background-color: #3d0000; /* Even darker maroon on active */
 }
 
-/* For Firefox */
-.control-group input[type="range"]::-moz-range-track {
-    height: 10px;
-    border-radius: 5px;
-    background: #ccc;
-}
-
-.control-group input[type="range"]::-moz-range-thumb {
-    width: 30px;
-    height: 30px;
-    background: #4CAF50;
-    border-radius: 50%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-#volumePercentage, #echoPercentage {
-    font-size: 1.2em;
-    margin-top: 5px;
-    color: #fff;
-}
-
+/* Label styling */
 label {
     font-size: 1.2em;
     margin-top: 10px;
@@ -186,6 +184,26 @@ label {
     color: #fff;
 }
 
+/* Volume and Echo percentage display */
+#volumePercentage, #echoPercentage {
+    font-size: 1em;
+    color: #fff;
+    text-align: center;
+}
+
+/* Status text */
+#status {
+    font-size: 1.2em;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+
+
+/* Status text */
 #status {
     font-size: 1.2em;
     margin-top: 10px;
