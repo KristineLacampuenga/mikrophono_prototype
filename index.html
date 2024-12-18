@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Microphone Web App</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -17,26 +18,35 @@
         <button id="toggleButton" class="icon-btn">
             <img src="realmic3.png" alt="Microphone Icon" class="microphone-btn">
         </button>
-        
+
         <!-- Status Text Below the Mic Button -->
-        <p id="status"></p>
+        <p id="status">Status: Ready</p>
 
         <!-- Buttons for Recording and Playback -->
         <div class="control-btn">
-            <button id="recordButton">Start Recording</button>
-            <button id="playbackButton">Playback Recording</button>
+            <button id="recordButton">
+                <i class='fas fa-record-vinyl' style='color:red'></i>
+                <span id="recordTimer">Start Recording</span>
+            </button>
+            <button id="playbackButton" disabled>
+                <i class="fas fa-play"></i>
+                Playback Recording
+            </button>
         </div>
 
         <!-- Controls for Volume and Echo -->
         <div class="controls">
+            <!-- Vertical Slider for Volume -->
             <div class="control-group">
-                <input type="range" id="volumeControl" min="0" max="100" value="20">
                 <label for="volumeControl">Volume</label>
-                <span id="volumePercentage">20%</span>
+                <input type="range" id="volumeControl" min="0" max="100" value="0" orient="vertical">
+                <span id="volumePercentage">0%</span>
             </div>
+
+            <!-- Vertical Slider for Echo -->
             <div class="control-group">
-                <input type="range" id="echoControl" min="0" max="100" value="0">
                 <label for="echoControl">Echo</label>
+                <input type="range" id="echoControl" min="0" max="100" value="0" orient="vertical">
                 <span id="echoPercentage">0%</span>
             </div>
         </div>
