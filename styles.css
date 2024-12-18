@@ -1,129 +1,108 @@
-/* Basic Styling */
 body {
-    font-family: 'Baskerville', serif;
-    background: url('building.jpg') no-repeat center center fixed;
+    background-image: url('building2.jpg');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    color: white;
-    margin: 0;
-    padding: 0;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.container {
     text-align: center;
-    transition: background-color 0.3s ease;
+    background-color: rgba(75, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 500px;
+    max-width: 90%;
 }
 
 h1 {
-    color: #fff;
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-    animation: textAnimation 3s ease-in-out infinite;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center align the text and icon */
+    font-size: 2.1em;
+    margin-bottom: 15px;
+    color: #ffffff;
 }
 
 .title-icon {
-    width: 75px; /* Adjust the size of the icon */
-    height: 75px; /* Adjust the size of the icon */
-    margin-bottom: 10px; /* Space between the icon and the text */
-    border-radius: 50%; /* Make the icon background a circle */
-    padding: 5px; /* Add padding around the icon */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-}
-
-
-@keyframes textAnimation {
-    0%, 100% { 
-        transform: scale(1); 
-        background-image: linear-gradient(to right, #ff007a, #fff); 
-        -webkit-background-clip: text;
-        color: transparent;
-    }
-    50% { 
-        transform: scale(1.1); 
-        background-image: linear-gradient(to right, #fff, #fad711); 
-        -webkit-background-clip: text;
-        color: transparent;
-    }
-}
-
-.animated-text {
-    font-size: 40px;
-    font-weight: bold;
-    display: inline-block;
-    animation: textAnimation 3s ease-in-out infinite;
-}
-
-/* Container */
-.container {
-    width: 90%;
-    max-width: 500px;
-    height: 80vh; /* Increase the height of the container */
-    padding: 40px; /* Adjust the padding for a more spacious layout */
-    border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.377);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.281);
-    backdrop-filter: blur(15px);
-    transition: box-shadow 0.3s ease-in-out;
-}
-
-.container:hover {
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
-}
-
-
-/* Button Styles */
-button {
-    padding: 10px; /* Reduced padding */
-    margin: 8px; /* Adjust margin for spacing */
-    font-size: 1rem; /* Reduced font size */
-    background-color: #FF007A;
-    color: white;
-    border: none;
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    vertical-align: middle;
     border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, color 0.3s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px; /* Reduced width */
-    height: 60px; /* Reduced height */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    background: radial-gradient(circle at 30% 30%, #FF007A, #D10069 60%);
+    padding: 5px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
-button:hover {
-    background-color: #D10069;
-    transform: scale(1.1); /* Adjusted hover scale */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5);
-    color: #FF00FF;
+/* Center the microphone button */
+#toggleButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    padding: 0;
 }
 
-/* Specific button styles */
-#muteButton { background: radial-gradient(circle at 30% 30%, #daf736, #009933 60%); }
-#echoButton { background: radial-gradient(circle at 30% 30%, #ffcc99, #ff6600 60%); }
-#stopButton { background: radial-gradient(circle at 30% 30%, #ac0909, #ff0066 60%); }
-#startButton { background: radial-gradient(circle at 30% 30%, #33ccff, #ff99cc 60%); }
-#recordButton { background: radial-gradient(circle at 30% 30%, #fdf912, #0ada1b 60%); }
-#playbackButton { background: radial-gradient(circle at 30% 30%, #d608a3, #350132 60%); }
+.microphone-btn {
+    width: 200px;
+    height: auto;
+}
 
-
-/* Controls */
-.controls {
-    margin-top: 60px;
+.control-btn {
     display: flex;
-    flex-direction: row;
-    gap: 60px;
     justify-content: center;
-    width: 100%;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+    background-color: #f0f0f0;
+    border: none;
+    color: #333;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+}
+
+#recordButton {
+    background-color: #4CAF50;
+}
+
+#playbackButton {
+    background-color: #4CAF50;
+}
+
+button:hover:not(:disabled) {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+/* Controls container */
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
 }
 
 .control-group {
@@ -131,122 +110,150 @@ button:hover {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-}
-
-/* Enhanced 3D Circular Slider */
-input[type="range"] {
-    width: 220px;
-    height: 15px;
-    margin: 10px 0;
-    cursor: pointer;
-    appearance: none;
-    background-color: #ddd;
-    border-radius: 25px;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0, 0, 0, 0.2); /* Outer shadow for depth */
-    position: relative;
-}
-
-input[type="range"]:focus {
-    outline: none;
-    background-color: #bbb;
-    transform: scale(1.05);
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-    height: 8px;
-    background: linear-gradient(135deg, #ff007a, #ff005c); /* 3D gradient effect on track */
-    border-radius: 25px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5); /* Adding track shadow for more depth */
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    height: 40px; /* Increased size for circular effect */
-    width: 40px;
-    background: #FF007A;
-    border-radius: 50%; /* Circle shape */
-    border: 2px solid #fff;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.6), 0px 8px 20px rgba(0, 0, 0, 0.4); /* Enhanced 3D shadow */
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    transform-origin: center center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); /* Added depth to thumb */
-}
-
-input[type="range"]:hover::-webkit-slider-thumb {
-    background-color: #D10069;
-    transform: scale(1.3); /* Slightly enlarged thumb */
-    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.8), 0px 10px 20px rgba(0, 0, 0, 0.6); /* Bigger shadow */
-}
-
-input[type="range"]:active::-webkit-slider-thumb {
-    transform: scale(1.4);
-    box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.9), 0px 15px 30px rgba(0, 0, 0, 0.7); /* Increased depth when active */
-}
-
-/* Volume and pitch percentage text */
-.control-group label, .control-group span {
-    font-size: 1rem;
-    color: white;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Visualizer */
-.visualizer-container {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1000px; /* Adding perspective for 3D effect */
-}
-
-canvas {
     width: 100%;
-    height: 250px;
-    margin-top: 30px;
-    border: 4px solid #FF007A;
-    border-radius: 15px;
-    background-color: rgba(0, 0, 0, 0.8);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5), 0 0 50px rgba(255, 0, 122, 0.8); /* Glowing effect */
-    transform: rotateX(5deg) rotateY(5deg); /* Slight 3D tilt */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
 
-/* Hover Effect: Enhancing studio-like feel */
-canvas:hover {
-    transform: rotateX(0deg) rotateY(0deg) scale(1.05); /* Slight zoom effect */
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.7), 0 0 70px rgba(255, 0, 122, 1); /* Stronger glowing effect */
+/* Realistic slider appearance */
+.control-group input[type="range"] {
+    width: 80%;
+    height: 15px;
+    border-radius: 10px;
+    background: #ccc;
+    outline: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 750px) {
-    body { padding: 20px; }
-    h1 { font-size: 1.8rem; }
-    .container { width: 100%; padding: 20px; }
-    button {
-        padding: 12px;
-        width: 70px;
-        height: 70px;
-        font-size: 1.2rem;
+.control-group input[type="range"]:hover {
+    background-color: #888;
+}
+
+.control-group input[type="range"]:focus {
+    background-color: #555;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* Slider thumb */
+.control-group input[type="range"]::-webkit-slider-runnable-track {
+    height: 10px;
+    border-radius: 5px;
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 30px;
+    height: 30px;
+    background: #4CAF50;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb:active {
+    background-color: #388e3c;
+}
+
+/* For Firefox */
+.control-group input[type="range"]::-moz-range-track {
+    height: 10px;
+    border-radius: 5px;
+    background: #ccc;
+}
+
+.control-group input[type="range"]::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+    background: #4CAF50;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+#volumePercentage, #echoPercentage {
+    font-size: 1.2em;
+    margin-top: 5px;
+    color: #fff;
+}
+
+label {
+    font-size: 1.2em;
+    margin-top: 10px;
+    display: block;
+    color: #fff;
+}
+
+#status {
+    font-size: 1.2em;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px; /* Reduced padding on smaller screens */
+        width: 100%;
     }
+
+    h1 {
+        font-size: 1.8em; /* Smaller title on smaller screens */
+    }
+
+    .microphone-btn {
+        width: 150px; /* Adjust microphone button size */
+    }
+
+    .control-btn {
+        flex-direction: column; /* Stack the control buttons */
+        gap: 15px; /* Less gap between buttons */
+    }
+
+    button {
+        width: 100%; /* Make buttons take full width on small screens */
+        padding: 10px 15px;
+    }
+
     .controls {
-        flex-direction: row;
-        gap: 30px;
+        width: 100%;
     }
-    input[type="range"] { width: 200px; }
-    canvas { height: 200px; }
+
+    .control-group input[type="range"] {
+        width: 90%; /* Wider sliders on small screens */
+    }
+
+    .title-icon {
+        width: 80px; /* Reduce the icon size */
+        height: 80px;
+    }
 }
 
+/* For very small screens */
 @media (max-width: 480px) {
-    h1 { font-size: 1.4rem; }
-    button {
-        padding: 10px;
-        width: 60px;
-        height: 60px;
-        font-size: 1rem;
+    h1 {
+        font-size: 1.5em;
     }
-    .container { padding: 15px; }
-    .controls { gap: 20px; }
-    input[type="range"] { width: 150px; }
-    canvas { height: 190px;}
+
+    .container {
+        padding: 15px;
+    }
+
+    .microphone-btn {
+        width: 120px;
+    }
+
+    button {
+        width: 100%;
+        padding: 8px 10px;
+    }
+
+    .controls {
+        gap: 10px;
+    }
 }
